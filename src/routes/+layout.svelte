@@ -17,6 +17,12 @@
 			>
 				Page Actions
 			</a>
+			<a
+				href="/counter"
+				class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
+			>
+				Counter
+			</a>
 		</div>
 	</div>
 </nav>
