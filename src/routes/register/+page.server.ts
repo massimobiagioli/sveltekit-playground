@@ -1,5 +1,6 @@
 import { fail } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
+import { registerHandler } from '$lib/services';
 
 export const load = (async () => {
     const initialData = { key1: 'value1', key2: 'value2' };
@@ -9,17 +10,19 @@ export const load = (async () => {
 export const actions = {
     register: async ({ request }) => {
         const formData = await request.formData()
-        const username = formData.get('username');
-        const password = formData.get('password');
+        const username = formData.get('username') as string;
+        const password = formData.get('password') as string;
         
         if (!username) {
             return fail(400, { username, missing: true });
         }
 
-        if (password !== 'pass123') {
+        const { success } = await registerHandler({ username, password });
+
+        if (!success) {
             return fail(400, { username, incorrect: true });
         }
 
-        return { success: true, username };
+        return { success, username };
     }
 } satisfies Actions;
