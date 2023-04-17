@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { incrementCounterHandler } from '$lib/services';
+	import { incrementCounterSignal } from "$lib/signals";
 
 	let count: number = 0;
 
@@ -8,7 +8,8 @@
 	}
 
 	async function handleClickServer() {
-		console.log('WIP: Server');
+		const { newValue } = await incrementCounterSignal({ actualValue: count });
+		count = newValue;
 	}
 </script>
 
